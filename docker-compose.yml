@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  mqtt:
+    profiles: ['mqtt']
+    container_name: sofar_mqtt
+    image: eclipse-mosquitto
+    ports:
+      - "1883:1883"
+    restart: unless-stopped
+    networks:
+      default:
+        aliases:
+          - sofar_mqtt
+
+  sofar_poller:
+    container_name: sofar_poller
+    build:
+      context: ./sofar_poller
+    volumes:
+      - ./sofar_poller:/app
+    networks:
+      default:
+        aliases:
+          - sofar_poller
+    env_file:
+      - path: ./default.env
+        required: true
+      - path: ./override.env
+        required: false
+
+networks:
+  default:
+    name: sofar-net
+

@@ -1,0 +1,13 @@
+[Unit]
+Description=Sofar RS485 TCP to MQTT Service
+After=syslog.target network.target
+
+[Service]
+WorkingDirectory=/opt/sofar_rs485_tcp_to_mqtt
+ExecStart=/opt/sofar_rs485_tcp_to_mqtt/venv/bin/python3 sofar2mqtt.py
+
+Restart=always
+RestartSec=120
+
+[Install]
+WantedBy=multi-user.target
